@@ -1,0 +1,219 @@
+{% extends "base.html" %}
+
+{% block title %}Classification Performance - VANET ML Analysis{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <h1 class="h2 mb-4">
+            <i class="fas fa-tags me-2 text-success"></i>
+            Priority Level Classification Performance
+        </h1>
+        <p class="lead text-muted">
+            Comparison of machine learning algorithms for predicting vehicle priority levels (1-5) in the VANET system.
+        </p>
+    </div>
+</div>
+
+{% if performance_image %}
+<div class="row">
+    <div class="col-12">
+        <div class="card shadow-sm">
+            <div class="card-header bg-success text-white">
+                <h5 class="card-title mb-0">
+                    <i class="fas fa-chart-bar me-2"></i>
+                    Classification Performance Comparison
+                </h5>
+            </div>
+            <div class="card-body p-0">
+                <div class="text-center">
+                    <img src="{{ url_for('static', filename='images/' + performance_image.split('/')[-1]) }}" 
+                         class="img-fluid" 
+                         alt="Classification Performance"
+                         style="max-width: 100%; height: auto;">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Algorithm Comparison -->
+<div class="row mt-4">
+    <div class="col-md-4">
+        <div class="card h-100 border-primary">
+            <div class="card-header bg-primary text-white">
+                <h6 class="card-title mb-0">
+                    <i class="fas fa-brain me-2"></i>
+                    Support Vector Machine (SVM)
+                </h6>
+            </div>
+            <div class="card-body">
+                <p class="card-text small">
+                    SVM with RBF kernel for non-linear classification of vehicle priority levels 
+                    based on network and traffic parameters.
+                </p>
+                <ul class="list-unstyled small">
+                    <li><i class="fas fa-check text-success me-2"></i>Good for high-dimensional data</li>
+                    <li><i class="fas fa-check text-success me-2"></i>Effective with clear margins</li>
+                    <li><i class="fas fa-check text-success me-2"></i>Memory efficient</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="card h-100 border-success">
+            <div class="card-header bg-success text-white">
+                <h6 class="card-title mb-0">
+                    <i class="fas fa-tree me-2"></i>
+                    Random Forest
+                </h6>
+            </div>
+            <div class="card-body">
+                <p class="card-text small">
+                    Ensemble method using multiple decision trees for robust priority 
+                    classification with feature importance analysis.
+                </p>
+                <ul class="list-unstyled small">
+                    <li><i class="fas fa-check text-success me-2"></i>Handles missing values well</li>
+                    <li><i class="fas fa-check text-success me-2"></i>Provides feature importance</li>
+                    <li><i class="fas fa-check text-success me-2"></i>Resistant to overfitting</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="card h-100 border-warning">
+            <div class="card-header bg-warning text-white">
+                <h6 class="card-title mb-0">
+                    <i class="fas fa-network-wired me-2"></i>
+                    Stacked RF-HST-LLR
+                </h6>
+            </div>
+            <div class="card-body">
+                <p class="card-text small">
+                    Novel approach combining Stacked Ensemble Leaarning 
+                    with RFC and Hybrid Subset Tree for enhanced prediction accuracy.
+                </p>
+                <ul class="list-unstyled small">
+                    <li><i class="fas fa-check text-success me-2"></i>Ensemble capabilities</li>
+                    <li><i class="fas fa-check text-success me-2"></i>Local pattern recognition</li>
+                    <li><i class="fas fa-check text-success me-2"></i>Adaptive learning</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Performance Metrics -->
+<div class="row mt-4">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header bg-info text-white">
+                <h6 class="card-title mb-0">
+                    <i class="fas fa-chart-line me-2"></i>
+                    Classification Metrics Explained
+                </h6>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-3">
+                        <h6 class="text-primary">Accuracy</h6>
+                        <p class="small text-muted">
+                            Overall correctness of the model in predicting priority levels 
+                            across all classes (1-5).
+                        </p>
+                    </div>
+                    <div class="col-md-3">
+                        <h6 class="text-success">Precision</h6>
+                        <p class="small text-muted">
+                            Proportion of correctly predicted priority levels among 
+                            all predictions for each class.
+                        </p>
+                    </div>
+                    <div class="col-md-3">
+                        <h6 class="text-warning">Recall</h6>
+                        <p class="small text-muted">
+                            Proportion of actual priority levels that were correctly 
+                            identified by the model.
+                        </p>
+                    </div>
+                    <div class="col-md-3">
+                        <h6 class="text-danger">F1-Score</h6>
+                        <p class="small text-muted">
+                            Harmonic mean of precision and recall, providing 
+                            balanced measure of model performance.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Priority Levels Information -->
+<div class="row mt-4">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header bg-dark text-white">
+                <h6 class="card-title mb-0">
+                    <i class="fas fa-layer-group me-2"></i>
+                    Priority Level Classifications
+                </h6>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-2 text-center">
+                        <div class="badge bg-danger fs-6 mb-2">Level 1</div>
+                        <p class="small">Lowest Priority</p>
+                    </div>
+                    <div class="col-md-2 text-center">
+                        <div class="badge bg-warning fs-6 mb-2">Level 2</div>
+                        <p class="small">Low Priority</p>
+                    </div>
+                    <div class="col-md-2 text-center">
+                        <div class="badge bg-info fs-6 mb-2">Level 3</div>
+                        <p class="small">Medium Priority</p>
+                    </div>
+                    <div class="col-md-2 text-center">
+                        <div class="badge bg-primary fs-6 mb-2">Level 4</div>
+                        <p class="small">High Priority</p>
+                    </div>
+                    <div class="col-md-2 text-center">
+                        <div class="badge bg-success fs-6 mb-2">Level 5</div>
+                        <p class="small">Highest Priority</p>
+                    </div>
+                    <div class="col-md-2">
+                        <p class="small text-muted">
+                            Priority levels are determined based on vehicle speed, network conditions, 
+                            and traffic parameters.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% else %}
+<div class="row">
+    <div class="col-12">
+        <div class="alert alert-warning" role="alert">
+            <h4 class="alert-heading">
+                <i class="fas fa-exclamation-triangle me-2"></i>
+                No Classification Results Available
+            </h4>
+            <p>{{ message }}</p>
+            <hr>
+            <p class="mb-0">
+                <a href="{{ url_for('home') }}" class="btn btn-primary">
+                    <i class="fas fa-home me-2"></i>Go to Home
+                </a>
+                to train models and generate performance analysis.
+            </p>
+        </div>
+    </div>
+</div>
+{% endif %}
+{% endblock %}

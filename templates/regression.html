@@ -1,0 +1,235 @@
+{% extends "base.html" %}
+
+{% block title %}Regression Performance - VANET ML Analysis{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <h1 class="h2 mb-4">
+            <i class="fas fa-chart-line me-2 text-warning"></i>
+            Traffic Density Regression Performance
+        </h1>
+        <p class="lead text-muted">
+            Comparison of machine learning algorithms for predicting traffic density (vehicles/km²) in the VANET system.
+        </p>
+    </div>
+</div>
+
+{% if performance_image %}
+<div class="row">
+    <div class="col-12">
+        <div class="card shadow-sm">
+            <div class="card-header bg-warning text-white">
+                <h5 class="card-title mb-0">
+                    <i class="fas fa-chart-line me-2"></i>
+                    Regression Performance Comparison
+                </h5>
+            </div>
+            <div class="card-body p-0">
+                <div class="text-center">
+                    <img src="{{ url_for('static', filename='images/' + performance_image.split('/')[-1]) }}" 
+                         class="img-fluid" 
+                         alt="Regression Performance"
+                         style="max-width: 100%; height: auto;">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Algorithm Comparison -->
+<div class="row mt-4">
+    <div class="col-md-4">
+        <div class="card h-100 border-primary">
+            <div class="card-header bg-primary text-white">
+                <h6 class="card-title mb-0">
+                    <i class="fas fa-brain me-2"></i>
+                    Support Vector Regression (SVR)
+                </h6>
+            </div>
+            <div class="card-body">
+                <p class="card-text small">
+                    SVR with RBF kernel for non-linear regression of traffic density 
+                    based on vehicular network parameters.
+                </p>
+                <ul class="list-unstyled small">
+                    <li><i class="fas fa-check text-success me-2"></i>Robust to outliers</li>
+                    <li><i class="fas fa-check text-success me-2"></i>Non-linear relationships</li>
+                    <li><i class="fas fa-check text-success me-2"></i>Sparse solutions</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="card h-100 border-success">
+            <div class="card-header bg-success text-white">
+                <h6 class="card-title mb-0">
+                    <i class="fas fa-tree me-2"></i>
+                    Random Forest Regressor
+                </h6>
+            </div>
+            <div class="card-body">
+                <p class="card-text small">
+                    Ensemble method using multiple decision trees for robust traffic 
+                    density prediction with feature importance analysis.
+                </p>
+                <ul class="list-unstyled small">
+                    <li><i class="fas fa-check text-success me-2"></i>Handles non-linearity well</li>
+                    <li><i class="fas fa-check text-success me-2"></i>Feature importance ranking</li>
+                    <li><i class="fas fa-check text-success me-2"></i>Reduces overfitting</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="card h-100 border-warning">
+            <div class="card-header bg-warning text-white">
+                <h6 class="card-title mb-0">
+                    <i class="fas fa-network-wired me-2"></i>
+                    Stacked RF-HST-LLR
+                </h6>
+            </div>
+            <div class="card-body">
+                <p class="card-text small">
+					Novel approach combining Stacked Ensemble Leaarning 
+                    with RFC and Hybrid Subset Tree for enhanced traffic density prediction.
+                </p>
+                <ul class="list-unstyled small">
+                    <li><i class="fas fa-check text-success me-2"></i>Complex pattern learning</li>
+                    <li><i class="fas fa-check text-success me-2"></i>Local neighborhood influence</li>
+                    <li><i class="fas fa-check text-success me-2"></i>Improved generalization</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Performance Metrics -->
+<div class="row mt-4">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header bg-info text-white">
+                <h6 class="card-title mb-0">
+                    <i class="fas fa-calculator me-2"></i>
+                    Regression Metrics Explained
+                </h6>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-3">
+                        <h6 class="text-primary">MAE</h6>
+                        <p class="small text-muted">
+                            <strong>Mean Absolute Error:</strong> Average of absolute differences 
+                            between predicted and actual traffic density values.
+                        </p>
+                    </div>
+                    <div class="col-md-3">
+                        <h6 class="text-success">RMSE</h6>
+                        <p class="small text-muted">
+                            <strong>Root Mean Square Error:</strong> Square root of the average 
+                            squared differences, sensitive to larger errors.
+                        </p>
+                    </div>
+                    <div class="col-md-3">
+                        <h6 class="text-warning">R² Score</h6>
+                        <p class="small text-muted">
+                            <strong>Coefficient of Determination:</strong> Proportion of variance 
+                            in traffic density explained by the model (0-1).
+                        </p>
+                    </div>
+                    <div class="col-md-3">
+                        <h6 class="text-danger">Lower is Better</h6>
+                        <p class="small text-muted">
+                            For MAE and RMSE, lower values indicate better performance. 
+                            For R², higher values (closer to 1) are better.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Traffic Density Insights -->
+<div class="row mt-4">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header bg-dark text-white">
+                <h6 class="card-title mb-0">
+                    <i class="fas fa-road me-2"></i>
+                    Traffic Density Analysis Insights
+                </h6>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-4">
+                        <h6 class="text-primary">Low Density (0-33 vehicles/km²)</h6>
+                        <p class="small text-muted">
+                            Free-flowing traffic conditions with minimal congestion. 
+                            High available bandwidth and low packet delays.
+                        </p>
+                    </div>
+                    <div class="col-md-4">
+                        <h6 class="text-warning">Medium Density (34-66 vehicles/km²)</h6>
+                        <p class="small text-muted">
+                            Moderate traffic conditions with some network congestion. 
+                            Balanced network resource utilization.
+                        </p>
+                    </div>
+                    <div class="col-md-4">
+                        <h6 class="text-danger">High Density (67-100 vehicles/km²)</h6>
+                        <p class="small text-muted">
+                            Heavy traffic conditions with significant congestion. 
+                            Limited bandwidth and increased packet delays.
+                        </p>
+                    </div>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-md-6">
+                        <h6 class="text-info">Key Factors Influencing Traffic Density:</h6>
+                        <ul class="list-unstyled small">
+                            <li><i class="fas fa-dot-circle text-primary me-2"></i>Vehicle speed patterns</li>
+                            <li><i class="fas fa-dot-circle text-primary me-2"></i>Network congestion levels</li>
+                            <li><i class="fas fa-dot-circle text-primary me-2"></i>Signal strength and connectivity</li>
+                            <li><i class="fas fa-dot-circle text-primary me-2"></i>Available bandwidth capacity</li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6">
+                        <h6 class="text-success">Applications:</h6>
+                        <ul class="list-unstyled small">
+                            <li><i class="fas fa-dot-circle text-success me-2"></i>Real-time traffic management</li>
+                            <li><i class="fas fa-dot-circle text-success me-2"></i>Route optimization algorithms</li>
+                            <li><i class="fas fa-dot-circle text-success me-2"></i>Network resource allocation</li>
+                            <li><i class="fas fa-dot-circle text-success me-2"></i>Smart city planning systems</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% else %}
+<div class="row">
+    <div class="col-12">
+        <div class="alert alert-warning" role="alert">
+            <h4 class="alert-heading">
+                <i class="fas fa-exclamation-triangle me-2"></i>
+                No Regression Results Available
+            </h4>
+            <p>{{ message }}</p>
+            <hr>
+            <p class="mb-0">
+                <a href="{{ url_for('home') }}" class="btn btn-primary">
+                    <i class="fas fa-home me-2"></i>Go to Home
+                </a>
+                to train models and generate performance analysis.
+            </p>
+        </div>
+    </div>
+</div>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,191 @@
+{% extends "base.html" %}
+
+{% block title %}Exploratory Data Analysis - VANET ML Analysis{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <h1 class="h2 mb-4">
+            <i class="fas fa-chart-bar me-2 text-primary"></i>
+            Exploratory Data Analysis
+        </h1>
+        <p class="lead text-muted">
+            Comprehensive analysis of the vehicular network state dataset including data distributions, correlations, and patterns.
+        </p>
+    </div>
+</div>
+
+{% if eda_image %}
+<div class="row">
+    <div class="col-12">
+        <div class="card shadow-sm">
+            <div class="card-header bg-primary text-white">
+                <h5 class="card-title mb-0">
+                    <i class="fas fa-chart-area me-2"></i>
+                    Data Visualization Dashboard
+                </h5>
+            </div>
+            <div class="card-body p-0">
+                <div class="text-center">
+                    <img src="{{ url_for('static', filename='images/' + eda_image.split('/')[-1]) }}" 
+                         class="img-fluid" 
+                         alt="EDA Analysis"
+                         style="max-width: 100%; height: auto;">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Analysis Summary -->
+<div class="row mt-4">
+    <div class="col-md-6">
+        <div class="card h-100">
+            <div class="card-header bg-success text-white">
+                <h6 class="card-title mb-0">
+                    <i class="fas fa-tags me-2"></i>
+                    Priority Level Analysis
+                </h6>
+            </div>
+            <div class="card-body">
+                <ul class="list-unstyled">
+                    <li><i class="fas fa-check text-success me-2"></i>Distribution of priority levels across vehicles</li>
+                    <li><i class="fas fa-check text-success me-2"></i>Speed patterns by priority classification</li>
+                    <li><i class="fas fa-check text-success me-2"></i>Signal strength correlation with priority</li>
+                    <li><i class="fas fa-check text-success me-2"></i>Available bandwidth by priority level</li>
+                    <li><i class="fas fa-check text-success me-2"></i>Congestion level impact on priority</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-6">
+        <div class="card h-100">
+            <div class="card-header bg-warning text-white">
+                <h6 class="card-title mb-0">
+                    <i class="fas fa-chart-line me-2"></i>
+                    Traffic Density Analysis
+                </h6>
+            </div>
+            <div class="card-body">
+                <ul class="list-unstyled">
+                    <li><i class="fas fa-check text-warning me-2"></i>Traffic density distribution patterns</li>
+                    <li><i class="fas fa-check text-warning me-2"></i>Packet delay vs traffic density correlation</li>
+                    <li><i class="fas fa-check text-warning me-2"></i>Speed vs bandwidth relationship</li>
+                    <li><i class="fas fa-check text-warning me-2"></i>RSU connection distribution</li>
+                    <li><i class="fas fa-check text-warning me-2"></i>Overall feature correlations</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Dataset Statistics -->
+<div class="row mt-4">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header bg-info text-white">
+                <h6 class="card-title mb-0">
+                    <i class="fas fa-info-circle me-2"></i>
+                    Key Insights
+                </h6>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-4">
+                        <h6 class="text-primary">Vehicle Speed Patterns</h6>
+                        <p class="small text-muted">
+                            Analysis shows varying speed distributions across different priority levels, 
+                            indicating the relationship between vehicle urgency and movement patterns.
+                        </p>
+                    </div>
+                    <div class="col-md-4">
+                        <h6 class="text-success">Network Quality</h6>
+                        <p class="small text-muted">
+                            Signal strength and packet delay metrics reveal network performance 
+                            characteristics that influence priority assignments and traffic management.
+                        </p>
+                    </div>
+                    <div class="col-md-4">
+                        <h6 class="text-warning">Traffic Congestion</h6>
+                        <p class="small text-muted">
+                            Congestion levels correlate with available bandwidth and traffic density, 
+                            providing insights for network optimization and resource allocation.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% else %}
+<div class="row">
+    <div class="col-12">
+        <div class="alert alert-warning" role="alert">
+            <h4 class="alert-heading">
+                <i class="fas fa-exclamation-triangle me-2"></i>
+                No EDA Results Available
+            </h4>
+            <p>{{ message }}</p>
+            <hr>
+            <p class="mb-0">
+                <a href="{{ url_for('home') }}" class="btn btn-primary">
+                    <i class="fas fa-home me-2"></i>Go to Home
+                </a>
+                to train models and generate EDA analysis.
+            </p>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+<!-- Data Features Information -->
+<div class="row mt-4">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header bg-dark text-white">
+                <h6 class="card-title mb-0">
+                    <i class="fas fa-database me-2"></i>
+                    Dataset Features
+                </h6>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-3">
+                        <h6 class="text-primary">Vehicle Information</h6>
+                        <ul class="list-unstyled small">
+                            <li>• Vehicle ID</li>
+                            <li>• Speed (km/h)</li>
+                            <li>• GPS Location</li>
+                        </ul>
+                    </div>
+                    <div class="col-md-3">
+                        <h6 class="text-success">Network Quality</h6>
+                        <ul class="list-unstyled small">
+                            <li>• Signal Strength (dBm)</li>
+                            <li>• Packet Delay (ms)</li>
+                            <li>• RSU Connection</li>
+                        </ul>
+                    </div>
+                    <div class="col-md-3">
+                        <h6 class="text-warning">Traffic Metrics</h6>
+                        <ul class="list-unstyled small">
+                            <li>• Congestion Level (%)</li>
+                            <li>• Available Bandwidth (MHz)</li>
+                            <li>• Contention Window Size</li>
+                        </ul>
+                    </div>
+                    <div class="col-md-3">
+                        <h6 class="text-danger">Target Variables</h6>
+                        <ul class="list-unstyled small">
+                            <li>• Priority Level (1-5)</li>
+                            <li>• Traffic Density (vehicles/km²)</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

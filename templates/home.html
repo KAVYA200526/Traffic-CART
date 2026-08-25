@@ -1,0 +1,270 @@
+{% extends "base.html" %}
+
+{% block title %}Home - VANET ML Analysis{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <!-- Hero Section -->
+        <div class="jumbotron bg-primary text-white p-5 rounded mb-4">
+            <h1 class="display-4 fw-bold">
+                <i class="fas fa-car me-3"></i>
+                Vehicular Network State Analysis
+            </h1>
+            <p class="lead">
+                Advanced Machine Learning analysis for VANET (Vehicular Ad-hoc Network) systems
+            </p>
+            <hr class="my-4">
+            <p>
+                This application provides comprehensive analysis of vehicular network data including 
+                priority level classification and traffic density prediction using state-of-the-art ML algorithms.
+            </p>
+        </div>
+    </div>
+</div>
+
+<!-- Model Management Section -->
+<div class="row mb-4">
+    <div class="col-12">
+        <h2 class="h4 mb-3">
+            <i class="fas fa-cogs me-2"></i>Model Management
+        </h2>
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h5 class="card-title">Train New Models</h5>
+                        <p class="card-text">
+                            Train SVM, Random Forest, and Stacked RF-HST-LLR models on the vehicular network dataset.
+                        </p>
+                        <button class="btn btn-primary" onclick="trainModels()">
+                            <i class="fas fa-play me-2"></i>Train Models
+                        </button>
+                    </div>
+                    <div class="col-md-6">
+                        <h5 class="card-title">Load Existing Models</h5>
+                        <p class="card-text">
+                            Load previously trained models if they exist in the models directory.
+                        </p>
+                        <button class="btn btn-success" onclick="loadModels()">
+                            <i class="fas fa-download me-2"></i>Load Models
+                        </button>
+                    </div>
+                </div>
+                <div class="mt-3">
+                    <div id="modelStatus" class="alert d-none"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Features Section -->
+<div class="row">
+    <div class="col-md-6 col-lg-3 mb-4">
+        <div class="card h-100 shadow-sm">
+            <div class="card-body text-center">
+                <div class="mb-3">
+                    <i class="fas fa-chart-bar fa-3x text-primary"></i>
+                </div>
+                <h5 class="card-title">Exploratory Data Analysis</h5>
+                <p class="card-text">
+                    Comprehensive visualization and statistical analysis of vehicular network data patterns.
+                </p>
+                <a href="{{ url_for('eda') }}" class="btn btn-outline-primary">
+                    View EDA <i class="fas fa-arrow-right ms-1"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6 col-lg-3 mb-4">
+        <div class="card h-100 shadow-sm">
+            <div class="card-body text-center">
+                <div class="mb-3">
+                    <i class="fas fa-tags fa-3x text-success"></i>
+                </div>
+                <h5 class="card-title">Priority Classification</h5>
+                <p class="card-text">
+                    ML models to classify vehicle priority levels (1-5) based on network parameters.
+                </p>
+                <a href="{{ url_for('classification') }}" class="btn btn-outline-success">
+                    View Results <i class="fas fa-arrow-right ms-1"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6 col-lg-3 mb-4">
+        <div class="card h-100 shadow-sm">
+            <div class="card-body text-center">
+                <div class="mb-3">
+                    <i class="fas fa-chart-line fa-3x text-warning"></i>
+                </div>
+                <h5 class="card-title">Traffic Density Prediction</h5>
+                <p class="card-text">
+                    Regression models to predict traffic density (vehicles/km²) in the network.
+                </p>
+                <a href="{{ url_for('regression') }}" class="btn btn-outline-warning">
+                    View Results <i class="fas fa-arrow-right ms-1"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6 col-lg-3 mb-4">
+        <div class="card h-100 shadow-sm">
+            <div class="card-body text-center">
+                <div class="mb-3">
+                    <i class="fas fa-magic fa-3x text-info"></i>
+                </div>
+                <h5 class="card-title">Real-time Prediction</h5>
+                <p class="card-text">
+                    Make predictions on new data using trained models for live analysis.
+                </p>
+                <a href="{{ url_for('prediction') }}" class="btn btn-outline-info">
+                    Make Predictions <i class="fas fa-arrow-right ms-1"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Dataset Information -->
+<div class="row mt-4">
+    <div class="col-12">
+        <h3 class="h5 mb-3">
+            <i class="fas fa-database me-2"></i>Dataset Information
+        </h3>
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h6>Features:</h6>
+                        <ul class="list-unstyled small">
+                            <li><i class="fas fa-circle text-primary me-2"></i>Vehicle ID</li>
+                            <li><i class="fas fa-circle text-primary me-2"></i>Speed (km/h)</li>
+                            <li><i class="fas fa-circle text-primary me-2"></i>GPS Location</li>
+                            <li><i class="fas fa-circle text-primary me-2"></i>Signal Strength (dBm)</li>
+                            <li><i class="fas fa-circle text-primary me-2"></i>Packet Delay (ms)</li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6">
+                        <h6>Additional Features:</h6>
+                        <ul class="list-unstyled small">
+                            <li><i class="fas fa-circle text-success me-2"></i>Congestion Level (%)</li>
+                            <li><i class="fas fa-circle text-success me-2"></i>Available Bandwidth (MHz)</li>
+                            <li><i class="fas fa-circle text-success me-2"></i>Contention Window Size</li>
+                            <li><i class="fas fa-circle text-success me-2"></i>RSU Connection Status</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col-md-6">
+                        <h6>Target Variables:</h6>
+                        <ul class="list-unstyled small">
+                            <li><i class="fas fa-target text-warning me-2"></i>Priority Level (1-5) - Classification</li>
+                            <li><i class="fas fa-target text-info me-2"></i>Traffic Density (vehicles/km²) - Regression</li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6">
+                        <h6>ML Algorithms:</h6>
+                        <ul class="list-unstyled small">
+                            <li><i class="fas fa-brain text-danger me-2"></i>Support Vector Machine (SVM)</li>
+                            <li><i class="fas fa-tree text-success me-2"></i>Random Forest</li>
+                            <li><i class="fas fa-network-wired text-primary me-2"></i>Hybrid MLP-KNN</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+function trainModels() {
+    const btn = event.target;
+    const originalText = btn.innerHTML;
+    btn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Training...';
+    btn.disabled = true;
+    
+    fetch('/train_models', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        const statusDiv = document.getElementById('modelStatus');
+        statusDiv.className = `alert alert-${data.status === 'success' ? 'success' : 'danger'}`;
+        statusDiv.textContent = data.message;
+        statusDiv.classList.remove('d-none');
+        
+        btn.innerHTML = originalText;
+        btn.disabled = false;
+    })
+    .catch(error => {
+        const statusDiv = document.getElementById('modelStatus');
+        statusDiv.className = 'alert alert-danger';
+        statusDiv.textContent = 'Error: ' + error.message;
+        statusDiv.classList.remove('d-none');
+        
+        btn.innerHTML = originalText;
+        btn.disabled = false;
+    });
+}
+
+function loadModels() {
+    const btn = event.target;
+    const originalText = btn.innerHTML;
+    btn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Loading...';
+    btn.disabled = true;
+    
+    fetch('/load_models', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        const statusDiv = document.getElementById('modelStatus');
+        statusDiv.className = `alert alert-${data.status === 'success' ? 'success' : 'warning'}`;
+        statusDiv.textContent = data.message;
+        statusDiv.classList.remove('d-none');
+        
+        btn.innerHTML = originalText;
+        btn.disabled = false;
+    })
+    .catch(error => {
+        const statusDiv = document.getElementById('modelStatus');
+        statusDiv.className = 'alert alert-danger';
+        statusDiv.textContent = 'Error: ' + error.message;
+        statusDiv.classList.remove('d-none');
+        
+        btn.innerHTML = originalText;
+        btn.disabled = false;
+    });
+}
+
+// Check model status on page load
+document.addEventListener('DOMContentLoaded', function() {
+    fetch('/check_models')
+    .then(response => response.json())
+    .then(data => {
+        if (data.models_exist) {
+            const statusDiv = document.getElementById('modelStatus');
+            statusDiv.className = 'alert alert-info';
+            statusDiv.textContent = 'All trained models are available and ready for use.';
+            statusDiv.classList.remove('d-none');
+        }
+    })
+    .catch(error => {
+        console.error('Error checking model status:', error);
+    });
+});
+</script>
+{% endblock %}
